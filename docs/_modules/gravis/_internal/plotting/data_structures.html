@@ -1,0 +1,415 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>gravis._internal.plotting.data_structures &mdash; gravis 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/js/require.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/gravis.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/package_references.html">Package references</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/format_specification.html">gravis JSON Graph Format (gJGF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/api/index.html">API documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">gravis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gravis._internal.plotting.data_structures</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gravis._internal.plotting.data_structures</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Data structures for representing JavaScript plots.&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">random</span> <span class="k">as</span> <span class="nn">_random</span>
+<span class="kn">import</span> <span class="nn">string</span> <span class="k">as</span> <span class="nn">_string</span>
+
+<span class="kn">from</span> <span class="nn">..utils</span> <span class="kn">import</span> <span class="n">operating_system</span> <span class="k">as</span> <span class="n">_operating_system</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">rendering</span><span class="p">,</span> <span class="n">template_system</span>
+
+
+<div class="viewcode-block" id="Figure"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure">[docs]</a><span class="k">class</span> <span class="nc">Figure</span><span class="p">:</span>
+    <span class="sd">&quot;&quot;&quot;Data structure for wrapping, displaying and exporting a JavaScript figure.&quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">html_template</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialize a figure with a partly filled HTML template containing a visualization.&quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_html_template</span> <span class="o">=</span> <span class="n">html_template</span>
+
+    <span class="c1"># IPython integration</span>
+    <span class="k">def</span> <span class="nf">_repr_html_</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Provide HTML text for integration with IPython rich display representation.</span>
+
+<span class="sd">        References</span>
+<span class="sd">        ----------</span>
+<span class="sd">        - https://ipython.readthedocs.io/en/stable/config/integrating.html#rich-display</span>
+<span class="sd">        - https://ipython.readthedocs.io/en/stable/api/generated/IPython.core.formatters.html#IPython.core.formatters.HTMLFormatter</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html_partial</span><span class="p">()</span>
+
+    <span class="c1"># Display in browser or notebook</span>
+<div class="viewcode-block" id="Figure.display"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.display">[docs]</a>    <span class="k">def</span> <span class="nf">display</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">inline</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Display the plot in a webbrowser or as IPython rich display representation.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        inline : bool</span>
+<span class="sd">            If True, the plot will be shown inline in a Jupyter notebook.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="n">inline</span><span class="p">:</span>
+            <span class="kn">import</span> <span class="nn">IPython</span>
+
+            <span class="n">html_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html_partial</span><span class="p">()</span>
+            <span class="n">html_object</span> <span class="o">=</span> <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">HTML</span><span class="p">(</span><span class="n">html_text</span><span class="p">)</span>
+            <span class="n">IPython</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">display</span><span class="p">(</span><span class="n">html_object</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">html_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html_standalone</span><span class="p">()</span>
+            <span class="n">_operating_system</span><span class="o">.</span><span class="n">open_in_webbrowser</span><span class="p">(</span><span class="n">html_text</span><span class="p">)</span></div>
+
+    <span class="c1"># Representation as text</span>
+<div class="viewcode-block" id="Figure.to_html"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.to_html">[docs]</a>    <span class="k">def</span> <span class="nf">to_html</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a HTML text representation.&quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html_standalone</span><span class="p">()</span></div>
+
+<div class="viewcode-block" id="Figure.to_html_standalone"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.to_html_standalone">[docs]</a>    <span class="k">def</span> <span class="nf">to_html_standalone</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a standalone HTML text representation that has all javascript code embedded.&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;RANDOM_ID&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_random_id</span><span class="p">(),</span>
+            <span class="s1">&#39;PREFIX&#39;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;&lt;!DOCTYPE html&gt;</span>
+<span class="s2">&lt;html&gt;</span>
+<span class="s2">&lt;head&gt;</span>
+<span class="s2">  &lt;meta charset=&quot;utf-8&quot;&gt;</span>
+<span class="s2">&lt;/head&gt;</span>
+<span class="s2">&lt;body style=&quot;margin:0;&quot;&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+            <span class="s1">&#39;LOAD_REQUIRE&#39;</span><span class="p">:</span> <span class="n">template_system</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;third_party/require/require.min.js&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;SUFFIX&#39;</span><span class="p">:</span> <span class="s2">&quot;&quot;&quot;&lt;/body&gt;</span>
+<span class="s2">&lt;/html&gt;&quot;&quot;&quot;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">html_text</span> <span class="o">=</span> <span class="n">template_system</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_html_template</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">html_text</span></div>
+
+<div class="viewcode-block" id="Figure.to_html_partial"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.to_html_partial">[docs]</a>    <span class="k">def</span> <span class="nf">to_html_partial</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a dependent HTML text representation that loads javascript with require.js.&quot;&quot;&quot;</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s1">&#39;RANDOM_ID&#39;</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">_generate_random_id</span><span class="p">(),</span>
+            <span class="s1">&#39;PREFIX&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+            <span class="s1">&#39;LOAD_REQUIRE&#39;</span><span class="p">:</span> <span class="n">template_system</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;third_party/require/require.min.js&#39;</span><span class="p">),</span>
+            <span class="s1">&#39;SUFFIX&#39;</span><span class="p">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+        <span class="p">}</span>
+        <span class="n">html_text</span> <span class="o">=</span> <span class="n">template_system</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_html_template</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">html_text</span></div>
+
+<div class="viewcode-block" id="Figure.to_jpg"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.to_jpg">[docs]</a>    <span class="k">def</span> <span class="nf">to_jpg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="o">=</span><span class="s1">&#39;chrome&#39;</span><span class="p">,</span> <span class="n">capture_delay</span><span class="o">=</span><span class="mf">3.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a JPEG text representation with base64 text encoding the binary data.&quot;&quot;&quot;</span>
+        <span class="n">html_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
+        <span class="n">jpg_data</span> <span class="o">=</span> <span class="n">rendering</span><span class="o">.</span><span class="n">render_and_capture</span><span class="p">(</span><span class="n">html_text</span><span class="p">,</span> <span class="s1">&#39;jpg&#39;</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">,</span> <span class="n">capture_delay</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">jpg_data</span></div>
+
+<div class="viewcode-block" id="Figure.to_png"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.to_png">[docs]</a>    <span class="k">def</span> <span class="nf">to_png</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="o">=</span><span class="s1">&#39;chrome&#39;</span><span class="p">,</span> <span class="n">capture_delay</span><span class="o">=</span><span class="mf">3.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a PNG text representation with base64 text encoding the binary data.&quot;&quot;&quot;</span>
+        <span class="n">html_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
+        <span class="n">png_data</span> <span class="o">=</span> <span class="n">rendering</span><span class="o">.</span><span class="n">render_and_capture</span><span class="p">(</span><span class="n">html_text</span><span class="p">,</span> <span class="s1">&#39;png&#39;</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">,</span> <span class="n">capture_delay</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">png_data</span></div>
+
+<div class="viewcode-block" id="Figure.to_svg"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.to_svg">[docs]</a>    <span class="k">def</span> <span class="nf">to_svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">webdriver</span><span class="o">=</span><span class="s1">&#39;chrome&#39;</span><span class="p">,</span> <span class="n">capture_delay</span><span class="o">=</span><span class="mf">3.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Create a SVG text representation.&quot;&quot;&quot;</span>
+        <span class="n">html_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
+        <span class="n">svg_text</span> <span class="o">=</span> <span class="n">rendering</span><span class="o">.</span><span class="n">render_and_capture</span><span class="p">(</span><span class="n">html_text</span><span class="p">,</span> <span class="s1">&#39;svg&#39;</span><span class="p">,</span> <span class="n">webdriver</span><span class="p">,</span> <span class="n">capture_delay</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">svg_text</span></div>
+
+    <span class="c1"># Export as HTML file</span>
+<div class="viewcode-block" id="Figure.export_html"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.export_html">[docs]</a>    <span class="k">def</span> <span class="nf">export_html</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export the plot as HTML file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            Filepath for the generated HTML file.</span>
+<span class="sd">        overwrite : bool</span>
+<span class="sd">            If True, overwrite the file if it already exists.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileExistsError</span>
+<span class="sd">            If overwrite=False and there is already a file at the given filepath.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Precondition</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="n">_operating_system</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Transformation</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">html_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_html</span><span class="p">()</span>
+            <span class="n">file_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">html_text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Figure.export_svg"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.export_svg">[docs]</a>    <span class="k">def</span> <span class="nf">export_svg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">webdriver</span><span class="o">=</span><span class="s1">&#39;chrome&#39;</span><span class="p">,</span> <span class="n">capture_delay</span><span class="o">=</span><span class="mf">3.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export the plot as SVG file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            Filepath for the generated SVG file.</span>
+<span class="sd">        overwrite : bool</span>
+<span class="sd">            If True, overwrite the file if it already exists.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileExistsError</span>
+<span class="sd">            If overwrite=False and there is already a file at the given filepath.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Precondition</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="n">_operating_system</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Transformation</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">svg_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_svg</span><span class="p">(</span><span class="n">webdriver</span><span class="p">,</span> <span class="n">capture_delay</span><span class="p">)</span>
+            <span class="n">file_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">svg_text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Figure.export_png"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.export_png">[docs]</a>    <span class="k">def</span> <span class="nf">export_png</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">webdriver</span><span class="o">=</span><span class="s1">&#39;chrome&#39;</span><span class="p">,</span> <span class="n">capture_delay</span><span class="o">=</span><span class="mf">3.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export the plot as PNG file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            Filepath for the generated PNG file.</span>
+<span class="sd">        overwrite : bool</span>
+<span class="sd">            If True, overwrite the file if it already exists.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileExistsError</span>
+<span class="sd">            If overwrite=False and there is already a file at the given filepath.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Precondition</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="n">_operating_system</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Transformation</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">png_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_png</span><span class="p">(</span><span class="n">webdriver</span><span class="p">,</span> <span class="n">capture_delay</span><span class="p">)</span>
+            <span class="n">file_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">png_text</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="Figure.export_jpg"><a class="viewcode-back" href="../../../../rst/api/figure.html#gravis._internal.plotting.data_structures.Figure.export_jpg">[docs]</a>    <span class="k">def</span> <span class="nf">export_jpg</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">filepath</span><span class="p">,</span> <span class="n">overwrite</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">webdriver</span><span class="o">=</span><span class="s1">&#39;chrome&#39;</span><span class="p">,</span> <span class="n">capture_delay</span><span class="o">=</span><span class="mf">3.5</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Export the plot as JPEG file.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        filepath : str</span>
+<span class="sd">            Filepath for the generated JPEG file.</span>
+<span class="sd">        overwrite : bool</span>
+<span class="sd">            If True, overwrite the file if it already exists.</span>
+
+<span class="sd">        Raises</span>
+<span class="sd">        ------</span>
+<span class="sd">        FileExistsError</span>
+<span class="sd">            If overwrite=False and there is already a file at the given filepath.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># Precondition</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">overwrite</span><span class="p">:</span>
+            <span class="n">_operating_system</span><span class="o">.</span><span class="n">is_file</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="n">raise_exception</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Transformation</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filepath</span><span class="p">,</span> <span class="s1">&#39;wb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file_handle</span><span class="p">:</span>
+            <span class="n">jpg_text</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_jpg</span><span class="p">(</span><span class="n">webdriver</span><span class="p">,</span> <span class="n">capture_delay</span><span class="p">)</span>
+            <span class="n">file_handle</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">jpg_text</span><span class="p">)</span></div>
+
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span> <span class="nf">_generate_random_id</span><span class="p">(</span><span class="n">length</span><span class="o">=</span><span class="mi">16</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Generate a random identifier starting with &quot;i and consisting of letters and digits.&quot;&quot;&quot;</span>
+        <span class="n">symbols</span> <span class="o">=</span> <span class="n">_string</span><span class="o">.</span><span class="n">ascii_letters</span> <span class="o">+</span> <span class="n">_string</span><span class="o">.</span><span class="n">digits</span>
+        <span class="k">return</span> <span class="s1">&#39;i&#39;</span> <span class="o">+</span> <span class="s1">&#39;&#39;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">_random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="n">symbols</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">))</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021, Robert Haas (Vienna, Austria).
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

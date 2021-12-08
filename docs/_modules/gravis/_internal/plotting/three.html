@@ -1,0 +1,597 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>gravis._internal.plotting.three &mdash; gravis 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../../../" src="../../../../_static/documentation_options.js"></script>
+        <script data-url_root="../../../../" id="documentation_options" src="../../../../_static/documentation_options.js"></script>
+        <script src="../../../../_static/jquery.js"></script>
+        <script src="../../../../_static/underscore.js"></script>
+        <script src="../../../../_static/doctools.js"></script>
+        <script src="../../../../_static/js/require.js"></script>
+    
+    <script type="text/javascript" src="../../../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../../../index.html">
+          
+
+          
+            
+            <img src="../../../../_static/gravis.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/package_references.html">Package references</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/format_specification.html">gravis JSON Graph Format (gJGF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/examples/index.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../../../rst/api/index.html">API documentation</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../../index.html">gravis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="../../../index.html">Module code</a> &raquo;</li>
+        
+      <li>gravis._internal.plotting.three</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <h1>Source code for gravis._internal.plotting.three</h1><div class="highlight"><pre>
+<span></span><span class="sd">&quot;&quot;&quot;Graph visualization with HTML/CSS/JS based on d3-force-graph.js using three.js.&quot;&quot;&quot;</span>
+
+<span class="kn">from</span> <span class="nn">..conversion</span> <span class="kn">import</span> <span class="n">_internal</span>
+<span class="kn">from</span> <span class="nn">..utils.args</span> <span class="kn">import</span> <span class="n">check_arg</span> <span class="k">as</span> <span class="n">_ca</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">data_structures</span> <span class="k">as</span> <span class="n">_ds</span>
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">template_system</span> <span class="k">as</span> <span class="n">_ts</span>
+
+
+<div class="viewcode-block" id="three"><a class="viewcode-back" href="../../../../rst/api/three.html#gravis.three">[docs]</a><span class="k">def</span> <span class="nf">three</span><span class="p">(</span><span class="n">data</span><span class="p">,</span>
+          <span class="n">graph_height</span><span class="o">=</span><span class="mi">450</span><span class="p">,</span> <span class="n">details_height</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+          <span class="n">show_details</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_details_toggle_button</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+          <span class="n">show_menu</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_menu_toggle_button</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+          <span class="n">show_node</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_size_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+          <span class="n">node_size_data_source</span><span class="o">=</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">use_node_size_normalization</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+          <span class="n">node_size_normalization_min</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">node_size_normalization_max</span><span class="o">=</span><span class="mf">75.0</span><span class="p">,</span>
+          <span class="n">node_drag_fix</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">node_hover_neighborhood</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">node_hover_tooltip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+          <span class="n">show_node_image</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_image_size_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+          <span class="n">show_node_label</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">show_node_label_border</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">node_label_data_source</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span>
+          <span class="n">node_label_size_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">node_label_rotation</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">node_label_font</span><span class="o">=</span><span class="s1">&#39;Arial&#39;</span><span class="p">,</span>
+          <span class="n">show_edge</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_size_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+          <span class="n">edge_size_data_source</span><span class="o">=</span><span class="s1">&#39;size&#39;</span><span class="p">,</span> <span class="n">use_edge_size_normalization</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+          <span class="n">edge_size_normalization_min</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">edge_size_normalization_max</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span>
+          <span class="n">edge_curvature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">edge_hover_tooltip</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+          <span class="n">show_edge_label</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">show_edge_label_border</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">edge_label_data_source</span><span class="o">=</span><span class="s1">&#39;id&#39;</span><span class="p">,</span>
+          <span class="n">edge_label_size_factor</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">edge_label_rotation</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span> <span class="n">edge_label_font</span><span class="o">=</span><span class="s1">&#39;Arial&#39;</span><span class="p">,</span>
+          <span class="n">zoom_factor</span><span class="o">=</span><span class="mf">0.75</span><span class="p">,</span> <span class="n">large_graph_threshold</span><span class="o">=</span><span class="mi">200</span><span class="p">,</span>
+          <span class="n">layout_algorithm_active</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+          <span class="n">use_many_body_force</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">many_body_force_strength</span><span class="o">=-</span><span class="mf">70.0</span><span class="p">,</span>
+          <span class="n">many_body_force_theta</span><span class="o">=</span><span class="mf">0.9</span><span class="p">,</span>
+          <span class="n">use_many_body_force_min_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">many_body_force_min_distance</span><span class="o">=</span><span class="mf">10.0</span><span class="p">,</span>
+          <span class="n">use_many_body_force_max_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">many_body_force_max_distance</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">,</span>
+          <span class="n">use_links_force</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">links_force_distance</span><span class="o">=</span><span class="mf">50.0</span><span class="p">,</span> <span class="n">links_force_strength</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+          <span class="n">use_x_positioning_force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">x_positioning_force_strength</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+          <span class="n">use_y_positioning_force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">y_positioning_force_strength</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+          <span class="n">use_z_positioning_force</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">z_positioning_force_strength</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span>
+          <span class="n">use_centering_force</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Create an interactive graph visualization with HTML/CSS/JS based on 3d-force-graph.js.</span>
+
+<span class="sd">    The library 3d-force-graph.js uses three.js to create a 3d visualization in WebGL,</span>
+<span class="sd">    hence the name for this function.</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This function has some known limitations in comparison to :func:`d3`:</span>
+
+<span class="sd">    - Nodes do not have a border. Edges do not come with labels.</span>
+<span class="sd">      Accordingly, this function ignores following properties in the given data:</span>
+
+<span class="sd">      - Graph metadata: ``node_border_color``, ``node_border_size``, ``edge_label_color``,</span>
+<span class="sd">        ``edge_label_size``</span>
+<span class="sd">      - Node metadata: ``border_color``, ``border_size``</span>
+<span class="sd">      - Edge metadata: ``label_color``, ``label_size``</span>
+
+<span class="sd">    - Node labels can not be rotated.</span>
+<span class="sd">    - Edge labels are not available yet.</span>
+<span class="sd">    - Hovering over a node does not support neighborhood highlighting yet.</span>
+<span class="sd">    - The initial zoom factor can not be controlled yet.</span>
+<span class="sd">    - If nodes are hidden, then node labels and node images are hidden too.</span>
+<span class="sd">    - If an image is shown inside a node, no shape is drawn and therefore any</span>
+<span class="sd">      value provided for node shape and color is ignored.</span>
+<span class="sd">    - Static image export only works in raster image formats JPG and PNG,</span>
+<span class="sd">      not in vector image format SVG.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    data : str, dict, graph object, list</span>
+<span class="sd">        The input data needs to be in a custom format called</span>
+<span class="sd">        :ref:`gravis JSON Graph Format (gJGF) &lt;gJGF-format&gt;`.</span>
+
+<span class="sd">        It can be provided in following ways:</span>
+
+<span class="sd">        - *str*: A string in gJGF, or a filepath to a text file in gJGF.</span>
+<span class="sd">        - *dict*: A dict adhering to gJGF.</span>
+<span class="sd">        - *graph object*: An object from a</span>
+<span class="sd">          :ref:`supported graph library &lt;supported-graph-libraries&gt;`,</span>
+<span class="sd">          which internally gets converted to gJGF.</span>
+<span class="sd">        - *list*: Instead of a single graph, it is possible to provide a list of graphs.</span>
+<span class="sd">          They can be all be of the same type, but a mix of different types is also accepted.</span>
+<span class="sd">          The first graph in the list is shown after the visualization has loaded.</span>
+<span class="sd">          The other graphs can be chosen in the data selection menu of the</span>
+<span class="sd">          interactive visualization.</span>
+<span class="sd">    graph_height : int, float</span>
+<span class="sd">        Height of the graph container in pixels (px).</span>
+<span class="sd">    details_height : int, float</span>
+<span class="sd">        Height of the details container in pixels (px).</span>
+<span class="sd">    show_details : bool</span>
+<span class="sd">        If True, the details container is shown on load, otherwise hidden.</span>
+<span class="sd">    show_details_toggle_button : bool</span>
+<span class="sd">        If True, a button is shown that allows to toggle the visibility of the details container.</span>
+<span class="sd">    show_menu : bool</span>
+<span class="sd">        If True, the menu container is shown on load, otherwise hidden.</span>
+<span class="sd">    show_menu_toggle_button : bool</span>
+<span class="sd">        If True, a button is shown that allows to toggle the visibility of the menu container.</span>
+<span class="sd">    show_node : bool</span>
+<span class="sd">        If True, nodes are shown on load, otherwise hidden.</span>
+<span class="sd">    node_size_factor : int, float</span>
+<span class="sd">        A scaling factor that modifies node size.</span>
+<span class="sd">    node_size_data_source : str</span>
+<span class="sd">        Name of the numerical node property that is used as source for node size on load.</span>
+<span class="sd">    use_node_size_normalization : bool</span>
+<span class="sd">        If True, node sizes are normalized to lie in an interval between a</span>
+<span class="sd">        chosen min and max value.</span>
+<span class="sd">    node_size_normalization_min : int, float</span>
+<span class="sd">        Minimum value for node size if node size normalization is active.</span>
+<span class="sd">    node_size_normalization_max : int, float</span>
+<span class="sd">        Maximum value for node size if node size normalization is active.</span>
+<span class="sd">    node_drag_fix : bool</span>
+<span class="sd">        If True, the position of a node becomes fixed after dragging it, i.e. the</span>
+<span class="sd">        layout algorithm does not change its position but the user can drag it again.</span>
+<span class="sd">    node_hover_neighborhood : bool</span>
+<span class="sd">        If True, hovering a node leads to highlighting its neighborhood which consists of</span>
+<span class="sd">        all incident edges and adjacent nodes.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    node_hover_tooltip : bool</span>
+<span class="sd">        If True, hovering a node leads to popping up a tooltip if the hover property in the</span>
+<span class="sd">        metadata of this node contains a non-empty string or HTML text.</span>
+<span class="sd">    show_node_image : bool</span>
+<span class="sd">        If True, node images are shown on load for all nodes whose image property in the metadata</span>
+<span class="sd">        contains a valid image URL from which an image can be fetched.</span>
+<span class="sd">    node_image_size_factor : int, float</span>
+<span class="sd">        A scaling factor that modifies node image size.</span>
+<span class="sd">    show_node_label : bool</span>
+<span class="sd">        If True, node labels are shown on load, otherwise hidden.</span>
+<span class="sd">    show_node_label_border : bool</span>
+<span class="sd">        If True, node labels have a small border in the color of the background to better</span>
+<span class="sd">        separate the text from other visual elements like edges or nodes.</span>
+<span class="sd">    node_label_data_source : str</span>
+<span class="sd">        Name of the node property that is used as source for node label text on load.</span>
+<span class="sd">    node_label_size_factor : int, float</span>
+<span class="sd">        A scaling factor that modifies node label size.</span>
+<span class="sd">    node_label_rotation : int, float</span>
+<span class="sd">        An angle that modifies node label orientation.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    node_label_font : str</span>
+<span class="sd">        Name of the font that is used for node labels.</span>
+<span class="sd">    show_edge : bool</span>
+<span class="sd">        If True, edges are shown on load, otherwise hidden.</span>
+<span class="sd">    edge_size_factor : int, float</span>
+<span class="sd">        A scaling factor that modifies edge size (=edge width).</span>
+<span class="sd">    edge_size_data_source : str</span>
+<span class="sd">        Name of the edge property that is used as source for edge size on load.</span>
+<span class="sd">    use_edge_size_normalization : bool</span>
+<span class="sd">        If True, edge sizes are normalized to lie in an interval between a</span>
+<span class="sd">        chosen min and max value.</span>
+<span class="sd">    edge_size_normalization_min : int, float</span>
+<span class="sd">        Minimum value for edge size if node size normalization is active.</span>
+<span class="sd">    edge_size_normalization_max : int, float</span>
+<span class="sd">        Maximum value for edge size if node size normalization is active.</span>
+<span class="sd">    edge_curvature : int, float</span>
+<span class="sd">        A factor that modifies edge curvature, where 0.0 means straight lines.</span>
+<span class="sd">    edge_hover_tooltip : bool</span>
+<span class="sd">        If True, hovering an edge leads to popping up a tooltip if the hover property in the</span>
+<span class="sd">        metadata of this edge contains a non-empty string or HTML text.</span>
+<span class="sd">    show_edge_label : bool</span>
+<span class="sd">        If True, edge labels are shown on load, otherwise hidden.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    show_edge_label_border : bool</span>
+<span class="sd">        If True, edge labels have a small border in the color of the background to better</span>
+<span class="sd">        separate the text from other visual elements like edges or nodes.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    edge_label_data_source : str</span>
+<span class="sd">        Name of the edge property that is used as source for edge label text on load.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    edge_label_size_factor : int, float</span>
+<span class="sd">        A scaling factor that modifies edge label size.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    edge_label_rotation : int, float</span>
+<span class="sd">        An angle that modifies edge label orientation.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    edge_label_font : str</span>
+<span class="sd">        Name of the font that is used for edge labels.</span>
+<span class="sd">    zoom_factor : int, float</span>
+<span class="sd">        Factor that modifies how close the camera is to the drawing area on load.</span>
+<span class="sd">        Caution: This feature is currently ignored in this plot and only here for API consistency.</span>
+<span class="sd">    large_graph_threshold : int, float</span>
+<span class="sd">        Number that determines from when on a network is considered to be large, which</span>
+<span class="sd">        means that before visualizing it an initial layout is calculated without moving anything.</span>
+<span class="sd">    layout_algorithm_active : bool</span>
+<span class="sd">        If True, the layout algorithm is active on load and leads to movement, otherwise inactive.</span>
+<span class="sd">    use_many_body_force : bool</span>
+<span class="sd">        If True, many body force is active in the layout algorithm.</span>
+<span class="sd">        This force acts between any pair of nodes but can be restricted to only act on nodes</span>
+<span class="sd">        within a certain distance.</span>
+<span class="sd">    many_body_force_strength : int, float</span>
+<span class="sd">        Number that determines the strength of the force. It can be positive to cause attraction</span>
+<span class="sd">        or negative (usual case) to cause repulsion between nodes.</span>
+<span class="sd">    many_body_force_theta : int, float</span>
+<span class="sd">        Number that determines the accuracy of the Barnes–Hut approximation of the</span>
+<span class="sd">        many-body simulation where nodes are grouped instead of treated individually</span>
+<span class="sd">        to improve performance.</span>
+<span class="sd">    use_many_body_force_min_distance : bool</span>
+<span class="sd">        If True, a minimum distance between nodes is used in the many-body force calculation.</span>
+<span class="sd">        This effectively leads to an upper bound on the strength of the force between any two</span>
+<span class="sd">        nodes and avoids instability.</span>
+<span class="sd">    many_body_force_min_distance : int, float</span>
+<span class="sd">        Number that determines the minimum distance between nodes over which the many-body force</span>
+<span class="sd">        is active.</span>
+<span class="sd">    use_many_body_force_max_distance : bool</span>
+<span class="sd">        If True, a maximum distance between nodes is used in the many-body force calculation.</span>
+<span class="sd">        This can improve performance but results in a more localized layout.</span>
+<span class="sd">    many_body_force_max_distance : int, float</span>
+<span class="sd">        Number that determines the maximum distance between nodes over which the many-body force</span>
+<span class="sd">        is active.</span>
+<span class="sd">    use_links_force : bool</span>
+<span class="sd">        If True, link force is active in the layout algorithm.</span>
+<span class="sd">        This force acts between pairs of nodes that are connected by an edge. It pushes them</span>
+<span class="sd">        together or apart in order to come close to a certain distance between connected nodes.</span>
+<span class="sd">    links_force_distance : int, float</span>
+<span class="sd">        Number that determines the preferred distance between connected nodes.</span>
+<span class="sd">    links_force_strength : int, float</span>
+<span class="sd">        Number that determines the strength of the links force.</span>
+<span class="sd">    use_collision_force : bool</span>
+<span class="sd">        If True, collision force is active in the layout algorithm.</span>
+<span class="sd">        This force treats nodes as circles instead of points and acts on pairs of nodes that</span>
+<span class="sd">        overlap in order to push them apart.</span>
+<span class="sd">    collision_force_radius : int, float</span>
+<span class="sd">        Number that determines the radius of the circle around each node.</span>
+<span class="sd">    collision_force_strength : int, float</span>
+<span class="sd">        Number that determines the strength of the force.</span>
+<span class="sd">    use_x_positioning_force : bool</span>
+<span class="sd">        If True, x-positioning force is active in the layout algorithm.</span>
+<span class="sd">        This force modifies the x position of each node towards 0.0, effectively pushing them</span>
+<span class="sd">        towards the yz-plane.</span>
+<span class="sd">    x_positioning_force_strength : int, float</span>
+<span class="sd">        Number that indicates the strength of the force.</span>
+<span class="sd">    use_y_positioning_force : bool</span>
+<span class="sd">        This force modifies the y position of each node towards 0.0, effectively pushing them</span>
+<span class="sd">        towards the xz-plane.</span>
+<span class="sd">    y_positioning_force_strength : int, float</span>
+<span class="sd">        Number that indicates the strength of the force.</span>
+<span class="sd">    use_z_positioning_force : bool</span>
+<span class="sd">        If True, z-positioning force is active in the layout algorithm.</span>
+<span class="sd">        This force modifies the z position of each node towards 0.0, effectively pushing them</span>
+<span class="sd">        towards the xy-plane.</span>
+<span class="sd">    z_positioning_force_strength : int, float</span>
+<span class="sd">        Number that indicates the strength of the force.</span>
+<span class="sd">    use_centering_force : bool</span>
+<span class="sd">        This force attracts each node towards the center of the coordinate system at (0, 0, 0)</span>
+<span class="sd">        to keep the graph in the display area. It may lead to unexpected repulsion effects</span>
+<span class="sd">        if all nodes are fixed and then a single one is released by dragging it.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    A :ref:`Figure &lt;figure&gt;` object that can be used for displaying or exporting the plot.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    - https://github.com/vasturiano/3d-force-graph</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Argument processing</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">graph_height</span><span class="p">,</span> <span class="s1">&#39;graph_height&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">details_height</span><span class="p">,</span> <span class="s1">&#39;details_height&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_details</span><span class="p">,</span> <span class="s1">&#39;show_details&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_details_toggle_button</span><span class="p">,</span> <span class="s1">&#39;show_details_toggle_button&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_menu</span><span class="p">,</span> <span class="s1">&#39;show_menu&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_menu_toggle_button</span><span class="p">,</span> <span class="s1">&#39;show_menu_toggle_button&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_node</span><span class="p">,</span> <span class="s1">&#39;show_node&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_size_factor</span><span class="p">,</span> <span class="s1">&#39;node_size_factor&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_size_data_source</span><span class="p">,</span> <span class="s1">&#39;node_size_data_source&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_node_size_normalization</span><span class="p">,</span> <span class="s1">&#39;use_node_size_normalization&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_size_normalization_min</span><span class="p">,</span> <span class="s1">&#39;node_size_normalization_min&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_size_normalization_max</span><span class="p">,</span> <span class="s1">&#39;node_size_normalization_max&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_drag_fix</span><span class="p">,</span> <span class="s1">&#39;node_drag_fix&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_hover_neighborhood</span><span class="p">,</span> <span class="s1">&#39;node_hover_neighborhood&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_hover_tooltip</span><span class="p">,</span> <span class="s1">&#39;node_hover_tooltip&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_node_image</span><span class="p">,</span> <span class="s1">&#39;show_node_image&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_image_size_factor</span><span class="p">,</span> <span class="s1">&#39;node_image_size_factor&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_node_label</span><span class="p">,</span> <span class="s1">&#39;show_node_label&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_node_label_border</span><span class="p">,</span> <span class="s1">&#39;show_node_label_border&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_label_data_source</span><span class="p">,</span> <span class="s1">&#39;node_label_data_source&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_label_size_factor</span><span class="p">,</span> <span class="s1">&#39;node_label_size_factor&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_label_rotation</span><span class="p">,</span> <span class="s1">&#39;node_label_rotation&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">node_label_font</span><span class="p">,</span> <span class="s1">&#39;node_label_font&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_edge</span><span class="p">,</span> <span class="s1">&#39;show_edge&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_size_factor</span><span class="p">,</span> <span class="s1">&#39;edge_size_factor&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_size_data_source</span><span class="p">,</span> <span class="s1">&#39;edge_size_data_source&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_edge_size_normalization</span><span class="p">,</span> <span class="s1">&#39;use_edge_size_normalization&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_size_normalization_min</span><span class="p">,</span> <span class="s1">&#39;edge_size_normalization_min&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_size_normalization_max</span><span class="p">,</span> <span class="s1">&#39;edge_size_normalization_max&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_curvature</span><span class="p">,</span> <span class="s1">&#39;edge_curvature&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_hover_tooltip</span><span class="p">,</span> <span class="s1">&#39;edge_hover_tooltip&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_edge_label</span><span class="p">,</span> <span class="s1">&#39;show_edge_label&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">show_edge_label_border</span><span class="p">,</span> <span class="s1">&#39;show_edge_label_border&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_label_data_source</span><span class="p">,</span> <span class="s1">&#39;edge_label_data_source&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_label_size_factor</span><span class="p">,</span> <span class="s1">&#39;edge_label_size_factor&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_label_rotation</span><span class="p">,</span> <span class="s1">&#39;edge_label_rotation&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">edge_label_font</span><span class="p">,</span> <span class="s1">&#39;edge_label_font&#39;</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">zoom_factor</span><span class="p">,</span> <span class="s1">&#39;zoom_factor&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">large_graph_threshold</span><span class="p">,</span> <span class="s1">&#39;large_graph_threshold&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">layout_algorithm_active</span><span class="p">,</span> <span class="s1">&#39;layout_algorithm_active&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_many_body_force</span><span class="p">,</span> <span class="s1">&#39;use_many_body_force&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">many_body_force_strength</span><span class="p">,</span> <span class="s1">&#39;many_body_force_strength&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">many_body_force_theta</span><span class="p">,</span> <span class="s1">&#39;many_body_force_theta&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_many_body_force_min_distance</span><span class="p">,</span> <span class="s1">&#39;use_many_body_force_min_distance&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">many_body_force_min_distance</span><span class="p">,</span> <span class="s1">&#39;many_body_force_min_distance&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_many_body_force_max_distance</span><span class="p">,</span> <span class="s1">&#39;use_many_body_force_max_distance&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">many_body_force_max_distance</span><span class="p">,</span> <span class="s1">&#39;many_body_force_max_distance&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_links_force</span><span class="p">,</span> <span class="s1">&#39;use_links_force&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">links_force_distance</span><span class="p">,</span> <span class="s1">&#39;links_force_distance&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">links_force_strength</span><span class="p">,</span> <span class="s1">&#39;links_force_strength&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_x_positioning_force</span><span class="p">,</span> <span class="s1">&#39;use_x_positioning_force&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">x_positioning_force_strength</span><span class="p">,</span> <span class="s1">&#39;x_positioning_force_strength&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_y_positioning_force</span><span class="p">,</span> <span class="s1">&#39;use_y_positioning_force&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">y_positioning_force_strength</span><span class="p">,</span> <span class="s1">&#39;y_positioning_force_strength&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_z_positioning_force</span><span class="p">,</span> <span class="s1">&#39;use_z_positioning_force&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">z_positioning_force_strength</span><span class="p">,</span> <span class="s1">&#39;z_positioning_force_strength&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="nb">float</span><span class="p">))</span>
+    <span class="n">_ca</span><span class="p">(</span><span class="n">use_centering_force</span><span class="p">,</span> <span class="s1">&#39;use_centering_force&#39;</span><span class="p">,</span> <span class="nb">bool</span><span class="p">)</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">_internal</span><span class="o">.</span><span class="n">normalize_graph_data</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+
+    <span class="c1"># Transformation</span>
+    <span class="n">site_template</span> <span class="o">=</span> <span class="n">_ts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;templates/three.html&#39;</span><span class="p">)</span>
+    <span class="n">insert_data</span> <span class="o">=</span> <span class="p">{</span>
+        <span class="s1">&#39;DEFINE_THREE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;third_party/three/three.min.def.js&#39;</span><span class="p">),</span>
+        <span class="s1">&#39;DEFINE_3D_FORCE_GRAPH&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;third_party/3d-force-graph/3d-force-graph.min.def.js&#39;</span><span class="p">),</span>
+
+        <span class="s1">&#39;DATA&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">data</span><span class="p">),</span>
+        <span class="s1">&#39;GRAPH_HEIGHT&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">graph_height</span><span class="p">),</span>
+        <span class="s1">&#39;DETAILS_HEIGHT&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">details_height</span><span class="p">),</span>
+        <span class="s1">&#39;SHOW_DETAILS&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_details</span><span class="p">),</span>
+        <span class="s1">&#39;SHOW_DETAILS_TOGGLE_BUTTON&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_details_toggle_button</span><span class="p">),</span>
+        <span class="s1">&#39;SHOW_MENU&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_menu</span><span class="p">),</span>
+        <span class="s1">&#39;SHOW_MENU_TOGGLE_BUTTON&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_menu_toggle_button</span><span class="p">),</span>
+
+        <span class="s1">&#39;SHOW_NODE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_node</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_SIZE_FACTOR&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_size_factor</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_SIZE_DATA_SOURCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_size_data_source</span><span class="p">),</span>
+        <span class="s1">&#39;USE_NODE_SIZE_NORMALIZATION&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_node_size_normalization</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_SIZE_NORMALIZATION_MIN&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_size_normalization_min</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_SIZE_NORMALIZATION_MAX&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_size_normalization_max</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_DRAG_FIX&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_drag_fix</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_HOVER_NEIGHBORHOOD&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_hover_neighborhood</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_HOVER_TOOLTIP&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_hover_tooltip</span><span class="p">),</span>
+
+        <span class="s1">&#39;SHOW_NODE_IMAGE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_node_image</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_IMAGE_SIZE_FACTOR&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_image_size_factor</span><span class="p">),</span>
+
+        <span class="s1">&#39;SHOW_NODE_LABEL&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_node_label</span><span class="p">),</span>
+        <span class="s1">&#39;SHOW_NODE_LABEL_BORDER&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_node_label_border</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_LABEL_DATA_SOURCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_label_data_source</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_LABEL_SIZE_FACTOR&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_label_size_factor</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_LABEL_ROTATION&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_label_rotation</span><span class="p">),</span>
+        <span class="s1">&#39;NODE_LABEL_FONT&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">node_label_font</span><span class="p">),</span>
+
+        <span class="s1">&#39;SHOW_EDGE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_edge</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_SIZE_FACTOR&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_size_factor</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_SIZE_DATA_SOURCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_size_data_source</span><span class="p">),</span>
+        <span class="s1">&#39;USE_EDGE_SIZE_NORMALIZATION&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_edge_size_normalization</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_SIZE_NORMALIZATION_MIN&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_size_normalization_min</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_SIZE_NORMALIZATION_MAX&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_size_normalization_max</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_CURVATURE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_curvature</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_HOVER_TOOLTIP&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_hover_tooltip</span><span class="p">),</span>
+
+        <span class="s1">&#39;SHOW_EDGE_LABEL&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_edge_label</span><span class="p">),</span>
+        <span class="s1">&#39;SHOW_EDGE_LABEL_BORDER&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">show_edge_label_border</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_LABEL_DATA_SOURCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_label_data_source</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_LABEL_SIZE_FACTOR&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_label_size_factor</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_LABEL_ROTATION&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_label_rotation</span><span class="p">),</span>
+        <span class="s1">&#39;EDGE_LABEL_FONT&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">edge_label_font</span><span class="p">),</span>
+
+        <span class="s1">&#39;ZOOM_FACTOR&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">zoom_factor</span><span class="p">),</span>
+        <span class="s1">&#39;LARGE_GRAPH_THRESHOLD&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">large_graph_threshold</span><span class="p">),</span>
+
+        <span class="s1">&#39;LAYOUT_ALGORITHM_ACTIVE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">layout_algorithm_active</span><span class="p">),</span>
+        <span class="s1">&#39;USE_MANY_BODY_FORCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_many_body_force</span><span class="p">),</span>
+        <span class="s1">&#39;MANY_BODY_FORCE_STRENGTH&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">many_body_force_strength</span><span class="p">),</span>
+        <span class="s1">&#39;MANY_BODY_FORCE_THETA&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">many_body_force_theta</span><span class="p">),</span>
+        <span class="s1">&#39;USE_MANY_BODY_FORCE_MIN_DISTANCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span>
+            <span class="n">use_many_body_force_min_distance</span><span class="p">),</span>
+        <span class="s1">&#39;MANY_BODY_FORCE_MIN_DISTANCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">many_body_force_min_distance</span><span class="p">),</span>
+        <span class="s1">&#39;USE_MANY_BODY_FORCE_MAX_DISTANCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span>
+            <span class="n">use_many_body_force_max_distance</span><span class="p">),</span>
+        <span class="s1">&#39;MANY_BODY_FORCE_MAX_DISTANCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">many_body_force_max_distance</span><span class="p">),</span>
+        <span class="s1">&#39;USE_LINKS_FORCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_links_force</span><span class="p">),</span>
+        <span class="s1">&#39;LINKS_FORCE_DISTANCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">links_force_distance</span><span class="p">),</span>
+        <span class="s1">&#39;LINKS_FORCE_STRENGTH&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">links_force_strength</span><span class="p">),</span>
+        <span class="s1">&#39;USE_X_POSITIONING_FORCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_x_positioning_force</span><span class="p">),</span>
+        <span class="s1">&#39;X_POSITIONING_FORCE_STRENGTH&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">x_positioning_force_strength</span><span class="p">),</span>
+        <span class="s1">&#39;USE_Y_POSITIONING_FORCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_y_positioning_force</span><span class="p">),</span>
+        <span class="s1">&#39;Y_POSITIONING_FORCE_STRENGTH&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">y_positioning_force_strength</span><span class="p">),</span>
+        <span class="s1">&#39;USE_Z_POSITIONING_FORCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_z_positioning_force</span><span class="p">),</span>
+        <span class="s1">&#39;Z_POSITIONING_FORCE_STRENGTH&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">z_positioning_force_strength</span><span class="p">),</span>
+        <span class="s1">&#39;USE_CENTERING_FORCE&#39;</span><span class="p">:</span> <span class="n">_ts</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">use_centering_force</span><span class="p">),</span>
+    <span class="p">}</span>
+    <span class="n">site_template</span> <span class="o">=</span> <span class="n">_ts</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="n">site_template</span><span class="p">,</span> <span class="n">insert_data</span><span class="p">)</span>
+    <span class="n">fig</span> <span class="o">=</span> <span class="n">_ds</span><span class="o">.</span><span class="n">Figure</span><span class="p">(</span><span class="n">site_template</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">fig</span></div>
+</pre></div>
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021, Robert Haas (Vienna, Austria).
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

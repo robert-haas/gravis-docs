@@ -1,0 +1,382 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>d3 &mdash; gravis 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/require.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="three" href="three.html" />
+    <link rel="prev" title="gravis" href="package.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/gravis.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../package_references.html">Package references</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../format_specification.html">gravis JSON Graph Format (gJGF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="package.html">gravis</a><ul class="current">
+<li class="toctree-l3 current"><a class="current reference internal" href="#">d3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="three.html">three</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vis.html">vis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="figure.html">Figure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="convert/index.html">convert</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">gravis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">API documentation</a> &raquo;</li>
+        
+          <li><a href="package.html">gravis</a> &raquo;</li>
+        
+      <li>d3</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/rst/api/d3.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="d3">
+<h1>d3<a class="headerlink" href="#d3" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="gravis.d3">
+<span class="sig-name descname"><span class="pre">d3</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">450</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_details_toggle_button</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_menu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_menu_toggle_button</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'size'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_node_size_normalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_normalization_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_normalization_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">75.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_drag_fix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_hover_neighborhood</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_hover_tooltip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_image_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node_label_border</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_font</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Arial'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'size'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_edge_size_normalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_normalization_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_normalization_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_curvature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_hover_tooltip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_edge_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_edge_label_border</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_font</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Arial'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">large_graph_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_algorithm_active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_many_body_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many_body_force_strength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">70.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many_body_force_theta</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.9</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_many_body_force_min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many_body_force_min_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_many_body_force_max_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">many_body_force_max_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_links_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">links_force_distance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">50.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">links_force_strength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_collision_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_force_radius</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">25.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">collision_force_strength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.7</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_x_positioning_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_positioning_force_strength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_y_positioning_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_positioning_force_strength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_centering_force</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/d3.html#d3"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis.d3" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an interactive graph visualization with HTML/CSS/JS based on d3.v7.js.</p>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>data</strong> (<em>str, dict, graph object, list</em>) – The input data needs to be in a custom format called
+<a class="reference internal" href="../format_specification.html#gjgf-format"><span class="std std-ref">gravis JSON Graph Format (gJGF)</span></a>.</p>
+<p>It can be provided in following ways:</p>
+<ul class="simple">
+<li><p><em>str</em>: A string in gJGF, or a filepath to a text file in gJGF.</p></li>
+<li><p><em>dict</em>: A dict adhering to gJGF.</p></li>
+<li><p><em>graph object</em>: An object from a
+<a class="reference internal" href="../format_specification.html#supported-graph-libraries"><span class="std std-ref">supported graph library</span></a>,
+which internally gets converted to gJGF.</p></li>
+<li><p><em>list</em>: Instead of a single graph, it is possible to provide a list of graphs.
+They can be all be of the same type, but a mix of different types is also accepted.
+The first graph in the list is shown after the visualization has loaded.
+The other graphs can be chosen in the data selection menu of the
+interactive visualization.</p></li>
+</ul>
+</li>
+<li><p><strong>graph_height</strong> (<em>int, float</em>) – Height of the graph container in pixels (px).</p></li>
+<li><p><strong>details_height</strong> (<em>int, float</em>) – Height of the details container in pixels (px).</p></li>
+<li><p><strong>show_details</strong> (<em>bool</em>) – If True, the details container is shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_details_toggle_button</strong> (<em>bool</em>) – If True, a button is shown that allows to toggle the visibility of the details container.</p></li>
+<li><p><strong>show_menu</strong> (<em>bool</em>) – If True, the menu container is shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_menu_toggle_button</strong> (<em>bool</em>) – If True, a button is shown that allows to toggle the visibility of the menu container.</p></li>
+<li><p><strong>show_node</strong> (<em>bool</em>) – If True, nodes are shown on load, otherwise hidden.</p></li>
+<li><p><strong>node_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies node size.</p></li>
+<li><p><strong>node_size_data_source</strong> (<em>str</em>) – Name of the numerical node property that is used as source for node size on load.</p></li>
+<li><p><strong>use_node_size_normalization</strong> (<em>bool</em>) – If True, node sizes are normalized to lie in an interval between a
+chosen min and max value.</p></li>
+<li><p><strong>node_size_normalization_min</strong> (<em>int, float</em>) – Minimum value for node size if node size normalization is active.</p></li>
+<li><p><strong>node_size_normalization_max</strong> (<em>int, float</em>) – Maximum value for node size if node size normalization is active.</p></li>
+<li><p><strong>node_drag_fix</strong> (<em>bool</em>) – If True, the position of a node becomes fixed after dragging it, i.e. the
+layout algorithm does not change its position but the user can drag it again.</p></li>
+<li><p><strong>node_hover_neighborhood</strong> (<em>bool</em>) – If True, hovering a node leads to highlighting its neighborhood which consists of
+all incident edges and adjacent nodes.</p></li>
+<li><p><strong>node_hover_tooltip</strong> (<em>bool</em>) – If True, hovering a node leads to popping up a tooltip if the hover property in the
+metadata of this node contains a non-empty string or HTML text.</p></li>
+<li><p><strong>show_node_image</strong> (<em>bool</em>) – If True, node images are shown on load for all nodes whose image property in the metadata
+contains a valid image URL from which an image can be fetched.</p></li>
+<li><p><strong>node_image_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies node image size.</p></li>
+<li><p><strong>show_node_label</strong> (<em>bool</em>) – If True, node labels are shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_node_label_border</strong> (<em>bool</em>) – If True, node labels have a small border in the color of the background to better
+separate the text from other visual elements like edges or nodes.</p></li>
+<li><p><strong>node_label_data_source</strong> (<em>str</em>) – Name of the node property that is used as source for node label text on load.</p></li>
+<li><p><strong>node_label_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies node label size.</p></li>
+<li><p><strong>node_label_rotation</strong> (<em>int, float</em>) – An angle that modifies node label orientation.</p></li>
+<li><p><strong>node_label_font</strong> (<em>str</em>) – Name of the font that is used for node labels.</p></li>
+<li><p><strong>show_edge</strong> (<em>bool</em>) – If True, edges are shown on load, otherwise hidden.</p></li>
+<li><p><strong>edge_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies edge size (=edge width).</p></li>
+<li><p><strong>edge_size_data_source</strong> (<em>str</em>) – Name of the edge property that is used as source for edge size on load.</p></li>
+<li><p><strong>use_edge_size_normalization</strong> (<em>bool</em>) – If True, edge sizes are normalized to lie in an interval between a
+chosen min and max value.</p></li>
+<li><p><strong>edge_size_normalization_min</strong> (<em>int, float</em>) – Minimum value for edge size if node size normalization is active.</p></li>
+<li><p><strong>edge_size_normalization_max</strong> (<em>int, float</em>) – Maximum value for edge size if node size normalization is active.</p></li>
+<li><p><strong>edge_curvature</strong> (<em>int, float</em>) – A factor that modifies edge curvature, where 0.0 means straight lines.</p></li>
+<li><p><strong>edge_hover_tooltip</strong> (<em>bool</em>) – If True, hovering an edge leads to popping up a tooltip if the hover property in the
+metadata of this edge contains a non-empty string or HTML text.</p></li>
+<li><p><strong>show_edge_label</strong> (<em>bool</em>) – If True, edge labels are shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_edge_label_border</strong> (<em>bool</em>) – If True, edge labels have a small border in the color of the background to better
+separate the text from other visual elements like edges or nodes.</p></li>
+<li><p><strong>edge_label_data_source</strong> (<em>str</em>) – Name of the edge property that is used as source for edge label text on load.</p></li>
+<li><p><strong>edge_label_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies edge label size.</p></li>
+<li><p><strong>edge_label_rotation</strong> (<em>int, float</em>) – An angle that modifies edge label orientation.</p></li>
+<li><p><strong>edge_label_font</strong> (<em>str</em>) – Name of the font that is used for edge labels.</p></li>
+<li><p><strong>zoom_factor</strong> (<em>int, float</em>) – Factor that modifies how close the camera is to the drawing area on load.</p></li>
+<li><p><strong>large_graph_threshold</strong> (<em>int, float</em>) – Number that determines from when on a graph is considered to be large, which
+means that before visualizing it an initial layout is calculated without moving anything.</p></li>
+<li><p><strong>layout_algorithm_active</strong> (<em>bool</em>) – If True, the layout algorithm is active on load and leads to movement, otherwise inactive.</p></li>
+<li><p><strong>use_many_body_force</strong> (<em>bool</em>) – If True, many body force is active in the layout algorithm.
+This force acts between any pair of nodes but can be restricted to only act on nodes
+within a certain distance.</p></li>
+<li><p><strong>many_body_force_strength</strong> (<em>int, float</em>) – Number that determines the strength of the force. It can be positive to cause attraction
+or negative (usual case) to cause repulsion between nodes.</p></li>
+<li><p><strong>many_body_force_theta</strong> (<em>int, float</em>) – Number that determines the accuracy of the Barnes–Hut approximation of the
+many-body simulation where nodes are grouped instead of treated individually
+to improve performance.</p></li>
+<li><p><strong>use_many_body_force_min_distance</strong> (<em>bool</em>) – If True, a minimum distance between nodes is used in the many-body force calculation.
+This effectively leads to an upper bound on the strength of the force between any two
+nodes and avoids instability.</p></li>
+<li><p><strong>many_body_force_min_distance</strong> (<em>int, float</em>) – Number that determines the minimum distance between nodes over which the many-body force
+is active.</p></li>
+<li><p><strong>use_many_body_force_max_distance</strong> (<em>bool</em>) – If True, a maximum distance between nodes is used in the many-body force calculation.
+This can improve performance but results in a more localized layout.</p></li>
+<li><p><strong>many_body_force_max_distance</strong> (<em>int, float</em>) – Number that determines the maximum distance between nodes over which the many-body force
+is active.</p></li>
+<li><p><strong>use_links_force</strong> (<em>bool</em>) – If True, link force is active in the layout algorithm.
+This force acts between pairs of nodes that are connected by an edge. It pushes them
+together or apart in order to come close to a certain distance between connected nodes.</p></li>
+<li><p><strong>links_force_distance</strong> (<em>int, float</em>) – Number that determines the preferred distance between connected nodes.</p></li>
+<li><p><strong>links_force_strength</strong> (<em>int, float</em>) – Number that determines the strength of the links force.</p></li>
+<li><p><strong>use_collision_force</strong> (<em>bool</em>) – If True, collision force is active in the layout algorithm.
+This force treats nodes as circles instead of points and acts on pairs of nodes that
+overlap in order to push them apart.</p></li>
+<li><p><strong>collision_force_radius</strong> (<em>int, float</em>) – Number that determines the radius of the circle around each node.</p></li>
+<li><p><strong>collision_force_strength</strong> (<em>int, float</em>) – Number that determines the strength of the force.</p></li>
+<li><p><strong>use_x_positioning_force</strong> (<em>bool</em>) – If True, x-positioning force is active in the layout algorithm.
+This force modifies the x position of each node towards 0.0, effectively pushing them
+towards the y-axis.</p></li>
+<li><p><strong>x_positioning_force_strength</strong> (<em>int, float</em>) – Number that indicates the strength of the force.</p></li>
+<li><p><strong>use_y_positioning_force</strong> (<em>bool</em>) – This force modifies the y position of each node towards 0.0, effectively pushing them
+towards the x-axis.</p></li>
+<li><p><strong>y_positioning_force_strength</strong> (<em>int, float</em>) – Number that indicates the strength of the force.</p></li>
+<li><p><strong>use_centering_force</strong> (<em>bool</em>) – This force attracts each node towards the center of the coordinate system at (0, 0)
+to keep the graph in the display area. It may lead to unexpected repulsion effects
+if all nodes are fixed and then a single one is released by dragging it.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <a class="reference internal" href="figure.html#figure"><span class="std std-ref">Figure</span></a> object that can be used for displaying or exporting the plot.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://d3js.org">https://d3js.org</a></p></li>
+<li><p><a class="reference external" href="https://github.com/d3/d3-force">https://github.com/d3/d3-force</a></p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="three.html" class="btn btn-neutral float-right" title="three" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="package.html" class="btn btn-neutral float-left" title="gravis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021, Robert Haas (Vienna, Austria).
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

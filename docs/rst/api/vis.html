@@ -1,0 +1,393 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>vis &mdash; gravis 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/require.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Figure" href="figure.html" />
+    <link rel="prev" title="three" href="three.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/gravis.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../package_references.html">Package references</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../format_specification.html">gravis JSON Graph Format (gJGF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="package.html">gravis</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="d3.html">d3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="three.html">three</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">vis</a></li>
+<li class="toctree-l3"><a class="reference internal" href="figure.html">Figure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="convert/index.html">convert</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">gravis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">API documentation</a> &raquo;</li>
+        
+          <li><a href="package.html">gravis</a> &raquo;</li>
+        
+      <li>vis</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/rst/api/vis.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="vis">
+<h1>vis<a class="headerlink" href="#vis" title="Permalink to this headline">¶</a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="gravis.vis">
+<span class="sig-name descname"><span class="pre">vis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">data</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">graph_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">450</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">details_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">100</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_details</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_details_toggle_button</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_menu</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_menu_toggle_button</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'size'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_node_size_normalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_normalization_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_size_normalization_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">75.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_drag_fix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_hover_neighborhood</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_hover_tooltip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node_image</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_image_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_node_label_border</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">node_label_font</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Arial'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_edge</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'size'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_edge_size_normalization</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_normalization_min</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_size_normalization_max</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_curvature</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_hover_tooltip</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_edge_label</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">show_edge_label_border</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_data_source</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'id'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_size_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_rotation</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">edge_label_font</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'Arial'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">zoom_factor</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.75</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">large_graph_threshold</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">500</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_algorithm_active</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">layout_algorithm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'barnesHut'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">gravitational_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">-</span> <span class="pre">2000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">central_gravity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spring_length</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">70.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spring_constant</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">avoid_overlap</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/vis.html#vis"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis.vis" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an interactive graph visualization with HTML/CSS/JS based on vis.js.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This function has some known limitations in comparison to <a class="reference internal" href="d3.html#gravis.d3" title="gravis.d3"><code class="xref py py-func docutils literal notranslate"><span class="pre">d3()</span></code></a>:</p>
+<ul class="simple">
+<li><p>vis.js does not support setting the opacity of nodes and edges.
+It also does not support setting arrow colors different from the edge color.
+Accordingly, this functions ignores following properties in the given data:</p>
+<ul>
+<li><p>Graph metadata: <code class="docutils literal notranslate"><span class="pre">arrow_color</span></code>, <code class="docutils literal notranslate"><span class="pre">node_opacity</span></code>, <code class="docutils literal notranslate"><span class="pre">edge_opacity</span></code></p></li>
+<li><p>Node metadata: <code class="docutils literal notranslate"><span class="pre">opacity</span></code></p></li>
+<li><p>Edge metadata: <code class="docutils literal notranslate"><span class="pre">opacity</span></code></p></li>
+</ul>
+</li>
+<li><p>Node and edge labels can not be rotated.</p></li>
+<li><p>Node and edge label borders may not be visible if zoomed closely.</p></li>
+<li><p>If edges are hidden, then edge labels are hidden too.</p></li>
+<li><p>Multi-edges are drawn on top of each other and therefore not discernable.</p></li>
+<li><p>Self-loops are drawn as unusual circles that look odd.</p></li>
+<li><p>The initial zoom factor can not be controlled yet.</p></li>
+<li><p>If an image is shown inside a node, its shape is always a rectangle, even if the
+value for node shape desires another choice.</p></li>
+<li><p>Static image export only works in raster image formats JPG and PNG,
+not in vector image format SVG.</p></li>
+</ul>
+</div>
+<div class="admonition caution">
+<p class="admonition-title">Caution</p>
+<p>There is a known bug when a node id is chosen to be “x” or “y”,
+which seems to clash with internal coordinate calculation.</p>
+</div>
+<dl class="field-list">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul>
+<li><p><strong>data</strong> (<em>str, dict, graph object, list</em>) – The input data needs to be in a custom format called
+<a class="reference internal" href="../format_specification.html#gjgf-format"><span class="std std-ref">gravis JSON Graph Format (gJGF)</span></a>.</p>
+<p>It can be provided in following ways:</p>
+<ul class="simple">
+<li><p><em>str</em>: A string in gJGF, or a filepath to a text file in gJGF.</p></li>
+<li><p><em>dict</em>: A dict adhering to gJGF.</p></li>
+<li><p><em>graph object</em>: An object from a
+<a class="reference internal" href="../format_specification.html#supported-graph-libraries"><span class="std std-ref">supported graph library</span></a>,
+which internally gets converted to gJGF.</p></li>
+<li><p><em>list</em>: Instead of a single graph, it is possible to provide a list of graphs.
+They can be all be of the same type, but a mix of different types is also accepted.
+The first graph in the list is shown after the visualization has loaded.
+The other graphs can be chosen in the data selection menu of the
+interactive visualization.</p></li>
+</ul>
+</li>
+<li><p><strong>graph_height</strong> (<em>int, float</em>) – Height of the graph container in pixels (px).</p></li>
+<li><p><strong>details_height</strong> (<em>int, float</em>) – Height of the details container in pixels (px).</p></li>
+<li><p><strong>show_details</strong> (<em>bool</em>) – If True, the details container is shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_details_toggle_button</strong> (<em>bool</em>) – If True, a button is shown that allows to toggle the visibility of the details container.</p></li>
+<li><p><strong>show_menu</strong> (<em>bool</em>) – If True, the menu container is shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_menu_toggle_button</strong> (<em>bool</em>) – If True, a button is shown that allows to toggle the visibility of the menu container.</p></li>
+<li><p><strong>show_node</strong> (<em>bool</em>) – If True, nodes are shown on load, otherwise hidden.</p></li>
+<li><p><strong>node_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies node size.</p></li>
+<li><p><strong>node_size_data_source</strong> (<em>str</em>) – Name of the numerical node property that is used as source for node size on load.</p></li>
+<li><p><strong>use_node_size_normalization</strong> (<em>bool</em>) – If True, node sizes are normalized to lie in an interval between a
+chosen min and max value.</p></li>
+<li><p><strong>node_size_normalization_min</strong> (<em>int, float</em>) – Minimum value for node size if node size normalization is active.</p></li>
+<li><p><strong>node_size_normalization_max</strong> (<em>int, float</em>) – Maximum value for node size if node size normalization is active.</p></li>
+<li><p><strong>node_drag_fix</strong> (<em>bool</em>) – If True, the position of a node becomes fixed after dragging it, i.e. the
+layout algorithm does not change its position but the user can drag it again.</p></li>
+<li><p><strong>node_hover_neighborhood</strong> (<em>bool</em>) – If True, hovering a node leads to highlighting its neighborhood which consists of
+all incident edges and adjacent nodes.</p></li>
+<li><p><strong>node_hover_tooltip</strong> (<em>bool</em>) – If True, hovering a node leads to popping up a tooltip if the hover property in the
+metadata of this node contains a non-empty string or HTML text.</p></li>
+<li><p><strong>show_node_image</strong> (<em>bool</em>) – If True, node images are shown on load for all nodes whose image property in the metadata
+contains a valid image URL from which an image can be fetched.</p></li>
+<li><p><strong>node_image_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies node image size.</p></li>
+<li><p><strong>show_node_label</strong> (<em>bool</em>) – If True, node labels are shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_node_label_border</strong> (<em>bool</em>) – If True, node labels have a small border in the color of the background to better
+separate the text from other visual elements like edges or nodes.</p></li>
+<li><p><strong>node_label_data_source</strong> (<em>str</em>) – Name of the node property that is used as source for node label text on load.</p></li>
+<li><p><strong>node_label_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies node label size.</p></li>
+<li><p><strong>node_label_rotation</strong> (<em>int, float</em>) – An angle that modifies node label orientation.
+Caution: This feature is currently ignored in this plot and only here for API consistency.</p></li>
+<li><p><strong>node_label_font</strong> (<em>str</em>) – Name of the font that is used for node labels.</p></li>
+<li><p><strong>show_edge</strong> (<em>bool</em>) – If True, edges are shown on load, otherwise hidden.</p></li>
+<li><p><strong>edge_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies edge size (=edge width).</p></li>
+<li><p><strong>edge_size_data_source</strong> (<em>str</em>) – Name of the edge property that is used as source for edge size on load.</p></li>
+<li><p><strong>use_edge_size_normalization</strong> (<em>bool</em>) – If True, edge sizes are normalized to lie in an interval between a
+chosen min and max value.</p></li>
+<li><p><strong>edge_size_normalization_min</strong> (<em>int, float</em>) – Minimum value for edge size if node size normalization is active.</p></li>
+<li><p><strong>edge_size_normalization_max</strong> (<em>int, float</em>) – Maximum value for edge size if node size normalization is active.</p></li>
+<li><p><strong>edge_curvature</strong> (<em>int, float</em>) – A factor that modifies edge curvature, where 0.0 means straight lines.</p></li>
+<li><p><strong>edge_hover_tooltip</strong> (<em>bool</em>) – If True, hovering an edge leads to popping up a tooltip if the hover property in the
+metadata of this edge contains a non-empty string or HTML text.</p></li>
+<li><p><strong>show_edge_label</strong> (<em>bool</em>) – If True, edge labels are shown on load, otherwise hidden.</p></li>
+<li><p><strong>show_edge_label_border</strong> (<em>bool</em>) – If True, edge labels have a small border in the color of the background to better
+separate the text from other visual elements like edges or nodes.</p></li>
+<li><p><strong>edge_label_data_source</strong> (<em>str</em>) – Name of the edge property that is used as source for edge label text on load.</p></li>
+<li><p><strong>edge_label_size_factor</strong> (<em>int, float</em>) – A scaling factor that modifies edge label size.</p></li>
+<li><p><strong>edge_label_rotation</strong> (<em>int, float</em>) – An angle that modifies edge label orientation.
+Caution: This feature is currently ignored in this plot and only here for API consistency.</p></li>
+<li><p><strong>edge_label_font</strong> (<em>str</em>) – Name of the font that is used for edge labels.</p></li>
+<li><p><strong>zoom_factor</strong> (<em>int, float</em>) – Factor that modifies how close the camera is to the drawing area on load.
+Caution: This feature is currently ignored in this plot and only here for API consistency.</p></li>
+<li><p><strong>large_graph_threshold</strong> (<em>int, float</em>) – Number that determines from when on a graph is considered to be large, which
+means that before visualizing it an initial layout is calculated without moving anything.
+Caution: This feature is currently not available.</p></li>
+<li><p><strong>layout_algorithm_active</strong> (<em>bool</em>) – If True, the layout algorithm is active on load and leads to movement, otherwise inactive.</p></li>
+<li><p><strong>layout_algorithm</strong> (<em>str</em>) – Name of the used layout algorithm (vis.js term: “solver” of the “physics simulation”).
+Possible values: “barnesHut”, “forceAtlas2Based”, “repulsion”, “hierarchicalRepulsion”</p></li>
+<li><p><strong>gravitational_constant</strong> (<em>int, float</em>) – Number that determines the strength of the many-body force acting between all pairs of
+nodes. It can be positive to cause attraction or negative (usual case) to cause repulsion.
+Only active if layout_algorithm is “barnesHut” or “forceAtlas2Based”.</p></li>
+<li><p><strong>central_gravity</strong> (<em>int, float</em>) – Number that determines the strength of the centering force that pulls the graph
+towards the center of the coordinate system (0,0) to keep it in the display area.</p></li>
+<li><p><strong>spring_length</strong> (<em>int, float</em>) – Number that determines the desired distance in the links force (vis.js terminology: edges
+are modeled as “springs”) that acts between connected pairs of nodes.</p></li>
+<li><p><strong>spring_constant</strong> (<em>int, float</em>) – Number that determines the strength of the links force.</p></li>
+<li><p><strong>avoid_overlap</strong> (<em>int, float</em>) – Number that determines the strength of the collision force that acts between nodes
+if they come too close together.
+Only active if layout_algorithm is “barnesHut”, “forceAtlas2Based” or
+“hierarchicalRepulsion”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A <a class="reference internal" href="figure.html#figure"><span class="std std-ref">Figure</span></a> object that can be used for displaying or exporting the plot.</p>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://visjs.org">https://visjs.org</a></p></li>
+<li><p><a class="reference external" href="https://visjs.github.io/vis-network/docs/network">https://visjs.github.io/vis-network/docs/network</a></p></li>
+</ul>
+</dd></dl>
+
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="figure.html" class="btn btn-neutral float-right" title="Figure" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="three.html" class="btn btn-neutral float-left" title="three" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021, Robert Haas (Vienna, Austria).
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

@@ -1,0 +1,380 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Figure &mdash; gravis 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../../_static/css/custom.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/jquery.js"></script>
+        <script src="../../_static/underscore.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/js/require.js"></script>
+    
+    <script type="text/javascript" src="../../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="convert" href="convert/index.html" />
+    <link rel="prev" title="vis" href="vis.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../../index.html">
+          
+
+          
+            
+            <img src="../../_static/gravis.svg" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../package_references.html">Package references</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../format_specification.html">gravis JSON Graph Format (gJGF)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">API documentation</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="package.html">gravis</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="d3.html">d3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="three.html">three</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vis.html">vis</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Figure</a></li>
+<li class="toctree-l3"><a class="reference internal" href="convert/index.html">convert</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">gravis</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+          <li><a href="index.html">API documentation</a> &raquo;</li>
+        
+          <li><a href="package.html">gravis</a> &raquo;</li>
+        
+      <li>Figure</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../../_sources/rst/api/figure.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<section id="figure">
+<span id="id1"></span><h1>Figure<a class="headerlink" href="#figure" title="Permalink to this headline">¶</a></h1>
+<dl class="py class">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Figure</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">html_template</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure" title="Permalink to this definition">¶</a></dt>
+<dd><p>Data structure for wrapping, displaying and exporting a JavaScript figure.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.display">
+<span class="sig-name descname"><span class="pre">display</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">inline</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.display"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.display" title="Permalink to this definition">¶</a></dt>
+<dd><p>Display the plot in a webbrowser or as IPython rich display representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>inline</strong> (<em>bool</em>) – If True, the plot will be shown inline in a Jupyter notebook.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.to_html">
+<span class="sig-name descname"><span class="pre">to_html</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.to_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.to_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a HTML text representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.to_html_standalone">
+<span class="sig-name descname"><span class="pre">to_html_standalone</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.to_html_standalone"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.to_html_standalone" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a standalone HTML text representation that has all javascript code embedded.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.to_html_partial">
+<span class="sig-name descname"><span class="pre">to_html_partial</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.to_html_partial"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.to_html_partial" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a dependent HTML text representation that loads javascript with require.js.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.to_jpg">
+<span class="sig-name descname"><span class="pre">to_jpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chrome'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.to_jpg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.to_jpg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a JPEG text representation with base64 text encoding the binary data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.to_png">
+<span class="sig-name descname"><span class="pre">to_png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chrome'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.to_png"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.to_png" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a PNG text representation with base64 text encoding the binary data.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.to_svg">
+<span class="sig-name descname"><span class="pre">to_svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chrome'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.to_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.to_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a SVG text representation.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.export_html">
+<span class="sig-name descname"><span class="pre">export_html</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.export_html"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.export_html" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the plot as HTML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Filepath for the generated HTML file.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite the file if it already exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileExistsError" title="(in Python v3.10)"><strong>FileExistsError</strong></a> – If overwrite=False and there is already a file at the given filepath.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.export_svg">
+<span class="sig-name descname"><span class="pre">export_svg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chrome'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.export_svg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.export_svg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the plot as SVG file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Filepath for the generated SVG file.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite the file if it already exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileExistsError" title="(in Python v3.10)"><strong>FileExistsError</strong></a> – If overwrite=False and there is already a file at the given filepath.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.export_png">
+<span class="sig-name descname"><span class="pre">export_png</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chrome'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.export_png"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.export_png" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the plot as PNG file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Filepath for the generated PNG file.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite the file if it already exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileExistsError" title="(in Python v3.10)"><strong>FileExistsError</strong></a> – If overwrite=False and there is already a file at the given filepath.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="gravis._internal.plotting.data_structures.Figure.export_jpg">
+<span class="sig-name descname"><span class="pre">export_jpg</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">overwrite</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">webdriver</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'chrome'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">capture_delay</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3.5</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../_modules/gravis/_internal/plotting/data_structures.html#Figure.export_jpg"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#gravis._internal.plotting.data_structures.Figure.export_jpg" title="Permalink to this definition">¶</a></dt>
+<dd><p>Export the plot as JPEG file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – Filepath for the generated JPEG file.</p></li>
+<li><p><strong>overwrite</strong> (<em>bool</em>) – If True, overwrite the file if it already exists.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises</dt>
+<dd class="field-even"><p><a class="reference external" href="https://docs.python.org/3/library/exceptions.html#FileExistsError" title="(in Python v3.10)"><strong>FileExistsError</strong></a> – If overwrite=False and there is already a file at the given filepath.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="convert/index.html" class="btn btn-neutral float-right" title="convert" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="vis.html" class="btn btn-neutral float-left" title="vis" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2018-2021, Robert Haas (Vienna, Austria).
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
